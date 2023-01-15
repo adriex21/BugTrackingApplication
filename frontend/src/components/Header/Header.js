@@ -6,7 +6,7 @@ const Header = (props) => {
             <span className="text-white text-2xl font-bold">Bug tracker</span>
 
             <div>
-                {props.loggedIn ? <span>Hello, {props.student.name}</span>
+                {props.data.loggedin ? <span className="text-white">Hello, {props.data.studentData.name}</span>
                     : 
                     <div className="flex flex-col gap-1 text-white text-md">
                         <span>You are not logged in </span>

@@ -28,9 +28,9 @@ const Login = (props) => {
     }
 
     return(
-        <Main>
-            {props.data.loggedIn ? 
-                <Navigate to={'/dashboard'}></Navigate>
+        <Main data={props.data}>
+            {props.data.loggedin ? 
+                <Navigate to={'/'}></Navigate>
                 : 
                 <div className="w-full flex justify-center text-white mt-10">
                     <div className="w-auto h-auto bg-[#013a4c] flex flex-col rounded-md p-5 gap-5">

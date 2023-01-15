@@ -1,11 +1,12 @@
 import Main from '../../containers/Main/Main'
 import Button from '../../components/Button/Button'
+import Teams from '../../components/Teams/Teams'
 
 const Dashboard = (props) => {
     return(
-        <Main>
-            {props.loggedIn ? 
-                <div></div>
+        <Main data={props.data}>
+            {props.data.loggedin ? 
+                <Teams></Teams>
                 : 
                 <div className="w-full flex justify-center text-white mt-10">
                     <div className="w-auto h-auto bg-[#013a4c] flex flex-col rounded-md p-5 gap-5">

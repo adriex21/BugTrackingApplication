@@ -24,10 +24,11 @@ function App() {
       if(localStorage.getItem('token')){  
           const response = await fetch('http://localhost:3002/api/student/getStudent', {
               method: 'GET',
-              headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`, },
+              headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
           })
           try {
               const received = await response.json();
+              console.log(received)
               if(received.msg === "Student doesn't exist") return setData(initialData)
               return setData({loggedin: true, studentData: received})
           }
@@ -38,6 +39,7 @@ function App() {
         setData(initialData)
       }
     }
+    checkLoggedIn()
   }, [])
 
   return (

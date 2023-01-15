@@ -114,13 +114,13 @@ const controller = {
 
     getMyTeams: async (req, res) => {
         const teams = await Team.find({"team.teamMembers": req.student._id})
-        if(!teams) return res.status(200).send('You are not a member of any teams')
+        if(!teams) return res.status(200).send({msg : 'You are not a member of any teams'})
         return res.status(200).send(teams)
     },
 
     getMyProjects: async (req, res) => {
         const teams = await Team.find({"team.teamMembers": req.student._id})
-        if(!teams) return res.status(200).send('You are not a member of any teams')
+        if(!teams) return res.status(200).send({msg : 'You are not a member of any teams'})
         if(teams.length > 1) return
 
         const projects = await Project.find({"project.team": teams._id, "project.projectMembers": req.student._id})
@@ -136,7 +136,7 @@ const controller = {
 
     getStudent: async (req, res) => {
         Student.findOne(
-            { _id: req.params.id }
+            { _id: req.student._id }
         ).then(student =>{
             res.status(200).send(student);
         }).catch(err => {
