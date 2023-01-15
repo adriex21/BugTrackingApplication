@@ -4,7 +4,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Login from './pages/Login/Login'
 import { useState, useEffect } from 'react';
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Routes,
   Route,
   Link
@@ -20,24 +20,33 @@ function App() {
   const [data, setData] = useState(initialData)
 
   useEffect(() => {
-    const getStudentData = async () =>{
-      
+    const checkLoggedIn = async () =>{
+      if(localStorage.getItem('token')){  
+          const response = await fetch('http://localhost:3002/api/student/getStudent', {
+              method: 'GET',
+              headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`, },
+          })
+          try {
+              const received = await response.json();
+              if(received.msg === "Student doesn't exist") return setData(initialData)
+              return setData({loggedin: true, studentData: received})
+          }
+          catch(error) {
+              console.log('ERROR: '+ error);
+          }
+      }else{
+        setData(initialData)
+      }
     }
   }, [])
 
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route exact path='/'>
-          <Dashboard data={data}></Dashboard>
-        </Route>
-
-        <Route path='/login'>
-          <Login />
-        </Route>
-
+        <Route path='/' element={<Dashboard data={data}></Dashboard>}></Route>
+        <Route path='/login' element={<Login data={data} />}></Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
 
     // <RouterProvider router={router} user={user} />
   );

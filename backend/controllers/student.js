@@ -89,17 +89,9 @@ const controller = {
         }
     },
 
-    getStudent: async (req, res) => {
-        Student.findOne(
-            { name: req.params.name }
-        ).then((student) => {
-            res.status(200).send(student);
-        }).catch(err => {
-            res.status(500).send(err);
-        })
-    },
 
     login: async (req, res) => {
+        console.log(req.body)
         try {
             let student = await Student.findOne({email: req.body.email } )
             let valid = await bcrypt.compare(req.body.password, student.password);
@@ -142,7 +134,7 @@ const controller = {
         return res.status(200).send(projects)
     },
 
-    getUser: async (req, res) => {
+    getStudent: async (req, res) => {
         Student.findOne(
             { _id: req.params.id }
         ).then(student =>{
