@@ -22,6 +22,29 @@ const controller = {
         return res.send({ msg: 'Bug has been added' });
     },
 
+    addCommit: async (req, res) => {
+
+        if(!['Open', 'Closed'].includes(req.body.status)) return res.status(500).send('Status is not recognised')
+
+        if(!req.body.commit) return res.status(500).send('No commit link provided')
+
+        const project = await Project.findOne({ _id: req.body.project_id })
+        if(!project) return res.status(500).send('Cannot find project')
+        if(!project.projectMembers.includes(req.student._id)) return res.status(500).send('You are not a member of the project')
+        if(!project.bugs.includes(req.body.bug_id)) return res.status(500).send('Bug ID does not belong to this project')
+
+        const bug = await Bug.findOne({ _id: req.body.bug_id})
+        if(!bug) return res.status(500).send('Could not find bug') 
+
+        bug.commits.push({
+            status: req?.body?.status,
+            commit: req?.body?.commit
+        })
+
+        await bug.save()
+        return res.status(200).send('Status has been modified') 
+    },
+
     getBug: async (req, res) => {
         Project.findOne({
             where: { projectName: req.body.projectName }

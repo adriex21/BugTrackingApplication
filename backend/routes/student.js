@@ -9,5 +9,6 @@ router.post('/login/', student.login);
 router.get('/getStudent/:name', auth(), student.getStudent);
 router.put('/update/:name', student.updateStudent);
 router.delete('/delete/:name', student.deleteStudent);
+router.get('/getMyTeams', auth(), student.getMyTeams)
 
 module.exports = router;

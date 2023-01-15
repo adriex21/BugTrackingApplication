@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const Team = require('../models/team');
+const Student = require('../models/student');
 
 const controller = {
     addTeam: async (req, res) => {
-        console.log(req.student);
         const { teamName } = req.body;
         let errors = [];
 
@@ -14,21 +14,27 @@ const controller = {
         }
 
         if (errors.length > 0) {
-            res.send(errors);
+            return res.send(errors);
         } else {
-            Team.findOne({ teamName: teamName }).then(async team => {
-                if (team) {
+            await Team.findOne({ teamName: teamName }).then(async team => {
+                if (team) {   
                     errors.push({ msg: 'Name already used' });
-
                     res.send({ msg: 'Team already exists' });
                 } else {
-                    const newTeam = Team.create({ teamName: teamName, createdBy:req.student._id, teamMembers: [req.student._id] });
-                    res.send({ msg: 'Team has been created' });
+                    const student = await Student.findOne({_id: req.student._id})
+                    if(!student) return res.status(500).send({ msg: 'Student does not exist' });
+                    if(student.team !== 'none') return res.status(500).send({ msg: 'You are already part of a team' });
+
+                    const newTeam = await Team.create({ teamName: teamName, createdBy:req.student._id, teamMembers: [req.student._id] });
+
+                    student.team = newTeam._id
+                    await student.save()
+                    return res.send({ msg: 'Team has been created' });
                 }
             })
         }
-
     },
+
 
     get: async (req, res) => {
         Team.findOne(

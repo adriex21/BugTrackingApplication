@@ -56,6 +56,7 @@ const controller = {
         return res.status(200).send('Added as tester')
     },
 
+
     getProject: async (req, res) => {
         Project.findOne(
             { projectName: req.params.projectName }
@@ -102,31 +103,6 @@ const controller = {
         }
     },
 
-    // postProjectsUser: async (req, res) => {
-    //     try {
-    //         let user = await User.findOne({
-    //             where: { id: req.params.id },
-    //             include: [{
-    //                 model: Team,
-    //                 attributes: ['id'],
-    //             }]
-    //         })
-    //         let teams = [];
-    //         user.teams.forEach(team => {
-    //             teams.push(team.id)
-    //         });
-
-    //         let projects = await Project.findAll({
-    //             where: {
-    //                 teamID: teams
-    //             }
-    //         })
-    //         res.send(projects)
-    //     }
-    //     catch (err) {
-    //         res.status(500).send(err);
-    //     }
-    // },
 
     updateProject: async (req, res) => {
         const projectToBeSent = {
@@ -166,24 +142,6 @@ const controller = {
         }
     },
 
-    // changeTeam: async (req, res) => {
-    //     Project.findOne({
-    //         where: { projectName: req.params.projectName }
-    //     }).then(project => {
-    //         Team.findOne({
-    //             where: { id: req.body.teamID }
-    //         }).then(project => {
-    //             project.teamID = req.body.teamID;
-    //             res.status(200).send({ msg: 'S-a schimbat echipa de pe proiect' });
-    //             project.save();
-    //         }).catch(err => {
-    //             res.status(500).send({ msg: 'Echipa nu exista' });
-    //         })
-
-    //     }).catch(err => {
-    //         res.status(500).send({ msg: 'Proiectul nu exista' });
-    //     })
-    // },
 
     deleteTeam: async (req, res) => {
         try {
