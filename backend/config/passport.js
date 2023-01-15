@@ -1,8 +1,8 @@
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
-const { Student } = require('../models/student');
+const  Student  = require('../models/student');
 
 const jwtOptions = {
-  secretOrKey: "eierwhgfrmlhm",
+  secretOrKey: "secret",
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
@@ -17,10 +17,9 @@ const tokenTypes = {
 
 const jwtVerify = async (payload, done) => {
   try {
-    if (payload.type !== tokenTypes.ACCESS) {
-      throw new Error('Invalid token type');
-    }
-    const student = await Student.findById(payload.sub);
+    console.log(payload);
+    const student = await Student.findOne({_id:payload.sub});
+    console.log(student);
     if (!student) {
       return done(null, false);
     }

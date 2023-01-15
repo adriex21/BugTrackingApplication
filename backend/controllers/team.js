@@ -22,7 +22,7 @@ const controller = {
 
                     res.send({ msg: 'Team already exists' });
                 } else {
-                    const newTeam = Team.create({ teamName });
+                    const newTeam = Team.create({ teamName: teamName, createdBy:req.student._id, teamMembers: [req.student._id] });
                     res.send({ msg: 'Team has been created' });
                 }
             })
@@ -32,8 +32,9 @@ const controller = {
 
     get: async (req, res) => {
         Team.findOne(
-           { id: req.params.id }
+           { _id: req.body.team }
         ).then((team) => {
+            console.log(team)
             res.status(200).send(team);
         }).catch(err => {
             res.status(500).send(err)
@@ -42,12 +43,13 @@ const controller = {
 
     getTeam: async (req, res) => {
         Team.findOne(
-            {teamName: req.params.teamName }
-    ).then((team) => {
-            res.status(200).send(team);
-        }).catch(err => {
-            res.status(500).send(err)
-        })
+            { _id: req.body.team }
+         ).then((team) => {
+             console.log(team)
+             res.status(200).send(team);
+         }).catch(err => {
+             res.status(500).send(err)
+         })
     },
 
     updateTeam: async (req, res) => {

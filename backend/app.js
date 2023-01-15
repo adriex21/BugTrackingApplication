@@ -5,13 +5,14 @@ const bodyParser= require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const router = require('./routes');
-const jwtStrategy = require('./config/passport')
+const {jwtStrategy} = require('./config/passport')
 
 const app = express()
 const port = 3002
 
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
+
 
 mongoose.connect('mongodb+srv://admin:admin@cluster0.tpgxycs.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true, 

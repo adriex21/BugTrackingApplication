@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken")
 const Student = require('../models/student');
 const moment = require('moment');
 
-const generateToken = (studentId, expires, secret = "eierwhgfrmlhm") => {
+const generateToken = (studentId, expires, secret = "secret") => {
     const payload = {
       sub: studentId,
       iat: moment().unix(),
@@ -102,11 +102,12 @@ const controller = {
         try {
             let student = await Student.findOne({email: req.body.email } )
             let valid = await bcrypt.compare(req.body.password, student.password);
+            console.log(student._id)
 
             if (valid) {
                 const expires = moment().add(10, 'days');
-                const token = generateToken(student.id, expires, );
-                res.send({ ok: true, id: student.id, token:token });
+                const token = generateToken(student._id, expires);
+                res.send({ ok: true, id: student._id, token:token });
 
                 
             } else {
