@@ -5,9 +5,13 @@ const bodyParser= require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const router = require('./routes');
+const jwtStrategy = require('./config/passport')
 
 const app = express()
 const port = 3002
+
+app.use(passport.initialize());
+passport.use('jwt', jwtStrategy);
 
 mongoose.connect('mongodb+srv://admin:admin@cluster0.tpgxycs.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true, 
@@ -21,28 +25,12 @@ db.once("open", function () {
 });
 
 
-
-
 app.use(bodyParser.urlencoded({
     extended: true
   }));
 app.use(bodyParser.json());
 
 app.use(cors()) 
-
-require('./config/passport')(passport);
-
-app.use(
-  session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-  })
-);
-
-// Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.listen(port, console.log('Server is on port: ' + port));
 

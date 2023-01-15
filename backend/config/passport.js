@@ -1,31 +1,37 @@
-const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
+const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
+const { Student } = require('../models/student');
 
-const Student = require('../models/student');
-
-module.exports = function (passport) {
-    passport.use(
-        new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-
-            Student.findOne(
-               { email: email }
-            ).then(student => {
-                if (!student) {
-                    return done(null, false, { msg: 'Email/Password are invalid' });
-                }
+const jwtOptions = {
+  secretOrKey: "eierwhgfrmlhm",
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+};
 
 
-                bcrypt.compare(password, student.password, (err, isMatch) => {
-                    if (err) throw err;
-                    if (isMatch) {
-                        return done(null, student);
-                    } else {
-                        return done(null, false, { msg: 'Email/Password are invalid' });
-                    }
-                });
-            });
-        })
-    );
+const tokenTypes = {
+    ACCESS: 'access',
+    REFRESH: 'refresh',
+    RESET_PASSWORD: 'resetPassword',
+    VERIFY_EMAIL: 'verifyEmail',
+  };
+  
 
-    
+const jwtVerify = async (payload, done) => {
+  try {
+    if (payload.type !== tokenTypes.ACCESS) {
+      throw new Error('Invalid token type');
+    }
+    const student = await Student.findById(payload.sub);
+    if (!student) {
+      return done(null, false);
+    }
+    done(null, student);
+  } catch (error) {
+    done(error, false);
+  }
+};
+
+const jwtStrategy = new JwtStrategy(jwtOptions, jwtVerify);
+
+module.exports = {
+  jwtStrategy,
 };

@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const studentRouter = require('./student');
+const teamRouter = require('./team');
 
 router.use("/student", studentRouter);
+router.use("/team", teamRouter);
 
 router.get('/logout', (req, res) => {
     req.logout();

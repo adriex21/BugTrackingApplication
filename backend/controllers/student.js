@@ -3,8 +3,18 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-
+const jwt = require("jsonwebtoken")
 const Student = require('../models/student');
+const moment = require('moment');
+
+const generateToken = (studentId, expires, secret = "eierwhgfrmlhm") => {
+    const payload = {
+      sub: studentId,
+      iat: moment().unix(),
+      exp: expires.unix(),
+    };
+    return jwt.sign(payload, secret);
+  };
 
 
 const controller = {
@@ -94,7 +104,11 @@ const controller = {
             let valid = await bcrypt.compare(req.body.password, student.password);
 
             if (valid) {
-                res.send({ ok: true, id: student.id });
+                const expires = moment().add(10, 'days');
+                const token = generateToken(student.id, expires, );
+                res.send({ ok: true, id: student.id, token:token });
+
+                
             } else {
                 res.send({ ok: false, msg: 'Password/email doesnt match' });
             }
@@ -169,7 +183,7 @@ const controller = {
                 try {
                     studentDB = await Student.updateOne(studentToBeSent, 
                          { name: req.params.name },);
-                    res.status(200).send({ msg: 'User schimbat' });
+                    res.status(200).send({ msg: 'Student changed' });
                 }
 
                 catch (err) {
