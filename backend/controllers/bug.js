@@ -6,37 +6,20 @@ const Project = require('../models/project');
 
 const controller = {
     addBug: async (req, res) => {
-        const { severity, priority, description } = req.body;
-        let errors = [];
+        const { project_id, repository, severity, priority, description } = req.body;
+        const project = await Project.findOne({ _id: project_id })
+        if(!project) return res.status(500).send({ msg: 'Project does not exist' });
 
+        //if an already registered tester is later on down the line added as a team member it will show this message, which might be a bug
+        if(project.projectMembers.includes(req.student._id)) return res.status(500).send({ msg: 'You are a project member and not a tester' });
 
-        if (severity < 1 && severity > 5) {
-            errors.push({ msg: 'Necesita o valoare intre 1 si 5 a severitatii' });
-        }
+        if(!project.testers.includes(req.student._id)) return res.status(500).send({ msg: 'You are not registered as a tester for this project' });
 
-        if (priority < 1 && priority > 5) {
-            errors.push({ msg: 'Necesita o valoare intre 1 si 5 a prioritatii' });
-        }
+        const newBug = await Bug.create({ severity: severity, repository: repository, priority: priority, description: description, projectID: project._id, reporter: req.student._id, status: 'Open' });
 
-
-        if (errors.length > 0) {
-            res.send(errors);
-        } else {
-            User.findOne({
-                where: { name: req.body.name }
-            }).then(user => {
-                Project.findOne({
-                    where: { projectName: req.body.projectName }
-                }).then(project => {
-                    const newBug = Bug.create({ severity: severity, priority: priority, description: description, projectID: project.id, userID: user.id });
-                    res.send({ msg: 'Bug-ul a fost inregistrat' });
-                }).catch(err => {
-                    res.status(500).send({ msg: 'Nu exista proiectul' });
-                })
-            }).catch(err => {
-                res.status(500).send({ msg: 'Nu exista user-ul' });
-            })
-        }
+        project.bugs.push(newBug._id)
+        await project.save()
+        return res.send({ msg: 'Bug has been added' });
     },
 
     getBug: async (req, res) => {

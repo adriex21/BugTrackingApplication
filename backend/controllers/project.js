@@ -44,6 +44,18 @@ const controller = {
 
     },
 
+    joinAsTester: async(req, res) => {
+        const project = await Project.findOne({ _id: req.body.project_id })
+        if(!project) return res.status(500).send('Cannot find project')
+
+        if(project.projectMembers.includes(req.student._id)) return res.status(500).send('You are a member of the project and cannot register as a tester')
+        if(project.testers.includes(req.student._id)) return res.status(500).send('You are already a tester')
+
+        project.testers.push(req.student._id)
+        await project.save()
+        return res.status(200).send('Added as tester')
+    },
+
     getProject: async (req, res) => {
         Project.findOne(
             { projectName: req.params.projectName }
