@@ -1,12 +1,25 @@
 import Main from '../../containers/Main/Main'
 import Button from '../../components/Button/Button'
 import Teams from '../../components/Teams/Teams'
+import { getTeams } from '../../utils/requests'
+import { useLayoutEffect, useState } from 'react'
 
 const Dashboard = (props) => {
+
+    const [teamData, setTeamData] = useState([])
+
+    useLayoutEffect(() => {
+        const getData = async () => {
+            const res = await getTeams();
+            if(res) setTeamData(res)
+        }
+        getData()
+    }, [])
+
     return(
         <Main data={props.data}>
             {props.data.loggedin ? 
-                <Teams></Teams>
+                <Teams teams={teamData}></Teams>
                 : 
                 <div className="w-full flex justify-center text-white mt-10">
                     <div className="w-auto h-auto bg-[#013a4c] flex flex-col rounded-md p-5 gap-5">

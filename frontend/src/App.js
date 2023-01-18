@@ -28,7 +28,6 @@ function App() {
           })
           try {
               const received = await response.json();
-              console.log(received)
               if(received.msg === "Student doesn't exist") return setData(initialData)
               return setData({loggedin: true, studentData: received})
           }

@@ -2,7 +2,7 @@ import Header from '../../components/Header/Header'
 
 const Main = (props) => {
     return(
-        <div className="w-[100vw]">
+        <div className="w-[100vw] h-[100hw]">
             <Header data={props.data}></Header>
             {props.children}
         </div>

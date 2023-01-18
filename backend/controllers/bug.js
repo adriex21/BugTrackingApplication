@@ -159,7 +159,7 @@ const controller = {
                         where: { name: req.body.name }
                     }).then(user => {
                         try {
-                            bugDB = Bug.update(bugToBeSent, {
+                            bugDB = Bug.updateOne(bugToBeSent, {
                                 where: { projectID: project.id, userID: user.id },
                             });
                             res.status(200).send({ msg: 'Bug schimbat' });

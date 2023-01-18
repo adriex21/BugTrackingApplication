@@ -7,6 +7,6 @@ const auth = require('../middlewares/auth')
 router.post('/add/', auth(), team.addTeam);
 router.get('/getTeam', auth(), team.getTeam);
 router.put('/update',auth(), team.updateTeam);
-router.delete('/delete',auth(), team.deleteTeam);
+router.delete('/deleteTeam',auth(), team.deleteTeam);
 
 module.exports = router;

@@ -19,7 +19,7 @@ const controller = {
             await Team.findOne({ teamName: teamName }).then(async team => {
                 if (team) {   
                     errors.push({ msg: 'Name already used' });
-                    res.send({ msg: 'Team already exists' });
+                    return res.send({ msg: 'Team already exists' });
                 } else {
                     const student = await Student.findOne({_id: req.student._id})
                     if(!student) return res.status(500).send({ msg: 'Student does not exist' });
@@ -29,23 +29,13 @@ const controller = {
 
                     student.team = newTeam._id
                     await student.save()
+
                     return res.send({ msg: 'Team has been created' });
                 }
             })
         }
     },
 
-
-    get: async (req, res) => {
-        Team.findOne(
-           { _id: req.body.team }
-        ).then((team) => {
-            console.log(team)
-            res.status(200).send(team);
-        }).catch(err => {
-            res.status(500).send(err)
-        })
-    },
 
     getTeam: async (req, res) => {
         Team.findOne(
@@ -93,9 +83,9 @@ const controller = {
 
     deleteTeam: async (req, res) => {
         try {
-            const team = await Team.findOne({ teamName: req.params.teamName });
+            const team = await Team.findOne({ _id: req.body.id });
             if (team) {
-                await team.destroy();
+                await team.deleteOne();
                 res.status(200).send({ msg: "Team has been deleted" });
             }
             else {

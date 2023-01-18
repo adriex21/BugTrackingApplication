@@ -1,42 +1,21 @@
 import {useEffect, useState} from 'react'
-
-const getTeamData = () => {
-    return fetch('http://localhost:3002/api/student/getMyTeams', {
-        method: 'GET',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
-    }).then(data => data.json())
-}
-
-const initialData = {
-    test: 'test',
-    testData: []
-}
-
-const Teams = (props) => {
-
-    const [teamData, setTeamData] = useState([])
-
-    useEffect(() => {
-        let mounted = true;
-        getTeamData()
-        .then(data => {
-            console.log(data)
-            if(mounted){
-                setTeamData({...teamData, testData: data})
-            }
-        })
-        return () => mounted = false;
-    }, [])
+import axios from 'axios'
 
 
-    useEffect(() => {setTeamData(teamData)}, [teamData])
+const Teams = ({ teams }) => {
 
     return(
         <div>
-            test
-            {teamData.testData && teamData.testData.map(team => {
-                <span className="text-black">{team.teamName}</span>
-            })}
+            {teams.length > 0 ?
+                teams && teams.map(team => (
+                    <span key={team.teamName}>{team.teamName}</span>
+                    ))
+                :
+                <div className='p-5 bg-blue-800 text-white flex justify-between'>
+                    <span className='font-bold'>You have no team</span>
+                </div>
+            }
+            
         </div>
     )
 
