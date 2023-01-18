@@ -64,13 +64,11 @@ const controller = {
 
 
     getProject: async (req, res) => {
-        Project.findOne(
-            { projectName: req.params.projectName }
-        ).then((project) => {
-            res.status(200).send(project);
-        }).catch(err => {
-            res.status(500).send(err)
-        })
+        console.log(req.body)
+        if(!req.body.id) return res.status(500).send('Project ID missing')
+        const project = await Project.findOne({ _id: req.body.id })
+        if(!project) return res.status(500).send('Project not found')
+        return res.status(200).send(project)
     },
 
     getProjects: async (req, res) => {

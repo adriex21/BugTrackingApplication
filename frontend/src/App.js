@@ -5,6 +5,7 @@ import Login from './pages/Login/Login'
 import CreateTeam from './pages/CreateTeam/CreateTeam'
 import TeamProjects from './pages/TeamProjects/TeamProjects'
 import AddProject from './pages/AddProject/AddProject'
+import Project from './pages/Project/Project';
 import RegisterTester from './pages/RegisterTester/RegisterTester'
 
 
@@ -57,6 +58,7 @@ function App() {
         <Route path='/create-team' element={<CreateTeam data={data} />}></Route>
         <Route path='/:teamName/projects' element={<TeamProjects data={data} />}></Route>
         <Route path='/:teamName/add-project' element={<AddProject data={data} />}></Route>
+        <Route path='/:project_id/view' element={<Project data={data} />}></Route>
       </Routes>
     </BrowserRouter>
 

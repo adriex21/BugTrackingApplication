@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import OpenProjects from '../../components/OpenProjects/OpenProjects'
 import CurrentlyTesting from '../../components/CurrentlyTesting/CurrentlyTesting'
 
-import { getOpenProjects } from '../../utils/requests'
+import { getOpenProjects, getCurrentlyTestingProjects } from '../../utils/requests'
 
 const Dashboard = (props) => {
 
@@ -22,12 +22,22 @@ const Dashboard = (props) => {
         getData()
     }, [])
 
+
     useEffect(() => {
         const getDataOpenProjects = async () => {
             const res = await getOpenProjects();
             if(res) setOpenProjectsData(res)
         }
         getDataOpenProjects()
+    }, [])
+
+
+    useEffect(() => {
+        const getCurrentlyTesting = async () => {
+            const res = await getCurrentlyTestingProjects();
+            if(res) setCurrentlyTestingData(res)
+        }
+        getCurrentlyTesting()
     }, [])
 
     return(

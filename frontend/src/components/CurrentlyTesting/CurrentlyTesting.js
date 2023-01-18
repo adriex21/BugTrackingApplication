@@ -32,7 +32,7 @@ const CurrentlyTesting = ({projects}) => {
                                      {project.bugs.length} 
                                  </div>
                                  
-                                 <a href='/' className='text-white border-2 border-white rounded-md py-2 px-3 font-bold'>
+                                 <a href={`/${project._id}/view`} className='text-white border-2 border-white rounded-md py-2 px-3 font-bold'>
                                      View
                                  </a>
                              </div>

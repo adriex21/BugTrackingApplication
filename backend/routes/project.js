@@ -5,7 +5,7 @@ const passport = require('passport');
 const auth = require('../middlewares/auth')
 
 router.post('/add', auth(), project.addProject);
-router.get('/getProject/', project.getProject);
+router.post('/getProject/', auth(), project.getProject);
 router.get('/getProjectByIdUser/', project.getProjectByIdStudent);
 router.get('/getProjects/', project.getProjects);
 router.put('/update/', project.updateProject);
