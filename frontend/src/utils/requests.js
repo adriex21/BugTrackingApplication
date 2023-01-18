@@ -30,6 +30,21 @@ export const getOpenProjects = async () => {
     }
 }
 
+export const getCurrentlyTestingProjects = async () => {
+    try{
+        const response = await axios({
+            method: 'get',
+            url: 'http://localhost:3002/api/student/getCurrentlyTestingProjects',
+            headers: { 
+                "Authorization": "Bearer " + localStorage.getItem("token") }
+        });
+        console.log(response.data)
+        return response.data
+    }catch(err){
+        console.log(err)
+    }
+}
+
 export const createTeam = async (payload) => {
     try{
         const response = await fetch('http://localhost:3002/api/team/add', {
@@ -79,5 +94,23 @@ export const createProject = async (payload) => {
         return response
     }catch(err){
         console.log(err)
+    }
+}
+
+export const joinAsTester = async (projectID) => {
+    try{
+        const response = await fetch({
+            method: 'post',
+            url: 'http://localhost:3002/api/project/joinAsTester',
+            headers: { 
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({id : projectID})
+        })
+        if(response.status === 500) return null
+        return response
+    }catch(err){
+        console.log(err.response.data.msg)
     }
 }

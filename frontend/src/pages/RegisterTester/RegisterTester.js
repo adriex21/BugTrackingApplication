@@ -1,9 +1,21 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
+import { joinAsTester } from "../../utils/requests";
 
 
 const RegisterTester = (props) => {
-    return (<></>)
+
+    const params = useParams()
+
+    const joinTester = async () => {
+        const response = await joinAsTester(params.id)
+        console.log(response)
+        //if(response) return window.location.href = '/'
+    }
+    joinTester()
+    return (<div>
+
+    </div>)
 }
 
 export default RegisterTester

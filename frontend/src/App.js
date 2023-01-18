@@ -57,9 +57,6 @@ function App() {
         <Route path='/create-team' element={<CreateTeam data={data} />}></Route>
         <Route path='/:teamName/projects' element={<TeamProjects data={data} />}></Route>
         <Route path='/:teamName/add-project' element={<AddProject data={data} />}></Route>
-        <Route path='/projects/:id/register-tester' element={<RegisterTester data={data} />}></Route>
-
-
       </Routes>
     </BrowserRouter>
 

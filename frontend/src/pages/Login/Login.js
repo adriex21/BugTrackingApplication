@@ -18,6 +18,7 @@ const Login = (props) => {
         })
         try {
             const received = await response.json();
+            if(response.status !== 200) return
             localStorage.setItem('token', received.token)
             document.location.href = '/'
             return received;

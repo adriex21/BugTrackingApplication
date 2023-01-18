@@ -4,12 +4,15 @@ import Teams from '../../components/Teams/Teams'
 import { getTeams } from '../../utils/requests'
 import { useEffect, useState } from 'react'
 import OpenProjects from '../../components/OpenProjects/OpenProjects'
+import CurrentlyTesting from '../../components/CurrentlyTesting/CurrentlyTesting'
+
 import { getOpenProjects } from '../../utils/requests'
 
 const Dashboard = (props) => {
 
     const [teamData, setTeamData] = useState([])
     const [openProjectsData, setOpenProjectsData] = useState([])
+    const [currentlyTestingData, setCurrentlyTestingData] = useState([])
 
     useEffect(() => {
         const getData = async () => {
@@ -33,6 +36,8 @@ const Dashboard = (props) => {
                 <>
                     <Teams teams={teamData}></Teams>
                     <OpenProjects projects={openProjectsData}></OpenProjects>
+                    <CurrentlyTesting projects={currentlyTestingData}></CurrentlyTesting>
+
                 </>
                 : 
                 <div className="w-full flex justify-center text-white mt-10">

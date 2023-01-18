@@ -136,7 +136,7 @@ const controller = {
         let new_projects = []
 
         projects.forEach(project => {
-            if(!project.projectMembers.includes(req.student._id)) return new_projects.push(project)
+            if(!project.projectMembers.includes(req.student._id) && !project.testers.includes(req.student._id)) return new_projects.push(project)
         })
 
         return res.status(200).send(new_projects)
