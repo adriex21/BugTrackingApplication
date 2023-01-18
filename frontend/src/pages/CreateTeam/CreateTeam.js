@@ -31,6 +31,7 @@ const CreateTeam = (props) => {
                     ))}
 
                     <input
+                    placeholder='Team name'
                     value={team.teamName || ''}
                     onChange={(e) => {setTeam({teamName: e.target.value})}}
                     type="text" className="outline-none h-8 rounded-md text-black"/>

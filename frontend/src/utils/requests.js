@@ -47,7 +47,7 @@ export const createTeam = async (payload) => {
     }
 }
 
-export const getTeamProjects = async (teamID) => {
+export const getTeamProjects = async (teamName) => {
     try{
         const response = await axios({
             method: 'POST',
@@ -56,11 +56,28 @@ export const getTeamProjects = async (teamID) => {
                 "Authorization": "Bearer " + localStorage.getItem("token"),
                 'Content-Type': 'application/json' 
             },
-            data: JSON.stringify({ id: teamID })
+            data: JSON.stringify({ teamName: teamName })
         });
         if(response.status === 500) return null
         return response
     }catch(err){
         console.log(err.response.data.msg)
+    }
+}
+
+export const createProject = async (payload) => {
+    try{
+        const response = await fetch('http://localhost:3002/api/project/add', {
+            method: 'POST',
+            headers: { 
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            },
+            body: JSON.stringify(payload)
+        })
+        if(response.status === 500) return null
+        return response
+    }catch(err){
+        console.log(err)
     }
 }

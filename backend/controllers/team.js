@@ -45,14 +45,14 @@ const controller = {
 
     getProjects: async (req, res) => {
         
-        if(!req.body.id) return res.status(500).send({msg: 'Team id is missing'})
+        if(!req.body.teamName) return res.status(500).send({msg: 'Team id is missing'})
 
         try{
-            const team = await Team.findOne({_id: req?.body?.id})
+            const team = await Team.findOne({teamName: req?.body?.teamName})
             if(!team) return res.status(500).send({msg: 'Team could not be found'})
             if(!team.teamMembers.includes(req.student._id)) return res.status(500).send({msg: 'You are not part of this team'})
 
-            const projects = await Project.find({ team: req.body.id })
+            const projects = await Project.find({ team: team._id })
             if(!projects) return res.status(500).send({msg: 'Could not query projects'})
             return res.status(200).send({projects: projects})
 
