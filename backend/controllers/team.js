@@ -48,6 +48,8 @@ const controller = {
          })
     },
 
+    
+
     updateTeam: async (req, res) => {
         const teamToBeSent = {
             teamName: req.body.teamName

@@ -17,7 +17,7 @@ const initialData = {
 }
 
 function App() {
-  const [data, setData] = useState(initialData)
+  const [data, setData] = useState(null)
 
   useEffect(() => {
     const checkLoggedIn = async () =>{
@@ -40,6 +40,8 @@ function App() {
     }
     checkLoggedIn()
   }, [])
+
+  if(!data) return
 
   return (
     <BrowserRouter>

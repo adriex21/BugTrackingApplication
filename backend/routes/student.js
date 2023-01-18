@@ -10,5 +10,7 @@ router.get('/getStudent', auth(), student.getStudent);
 router.put('/update/:name', student.updateStudent);
 router.delete('/delete/:name', student.deleteStudent);
 router.get('/getMyTeams', auth(), student.getMyTeams)
+router.get('/getOpenProjects', auth(), student.getOpenProjects)
+
 
 module.exports = router;

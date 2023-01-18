@@ -6,6 +6,7 @@ const passport = require('passport');
 const jwt = require("jsonwebtoken")
 const Student = require('../models/student');
 const Team = require('../models/team');
+const Project = require('../models/project');
 const moment = require('moment');
 
 const generateToken = (studentId, expires, secret = "secret") => {

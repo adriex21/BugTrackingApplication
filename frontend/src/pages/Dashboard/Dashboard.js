@@ -2,13 +2,16 @@ import Main from '../../containers/Main/Main'
 import Button from '../../components/Button/Button'
 import Teams from '../../components/Teams/Teams'
 import { getTeams } from '../../utils/requests'
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import OpenProjects from '../../components/OpenProjects/OpenProjects'
+import { getOpenProjects } from '../../utils/requests'
 
 const Dashboard = (props) => {
 
     const [teamData, setTeamData] = useState([])
+    const [openProjectsData, setOpenProjectsData] = useState([])
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const getData = async () => {
             const res = await getTeams();
             if(res) setTeamData(res)
@@ -16,10 +19,21 @@ const Dashboard = (props) => {
         getData()
     }, [])
 
+    useEffect(() => {
+        const getDataOpenProjects = async () => {
+            const res = await getOpenProjects();
+            if(res) setOpenProjectsData(res)
+        }
+        getDataOpenProjects()
+    }, [])
+
     return(
         <Main data={props.data}>
             {props.data.loggedin ? 
-                <Teams teams={teamData}></Teams>
+                <>
+                    <Teams teams={teamData}></Teams>
+                    <OpenProjects projects={openProjectsData}></OpenProjects>
+                </>
                 : 
                 <div className="w-full flex justify-center text-white mt-10">
                     <div className="w-auto h-auto bg-[#013a4c] flex flex-col rounded-md p-5 gap-5">
