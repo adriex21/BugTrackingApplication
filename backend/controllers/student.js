@@ -114,25 +114,32 @@ const controller = {
     },
 
     getMyTeams: async (req, res) => {
-        const teams = await Team.find({"team.teamMembers": req.student._id})
+        const teams = await Team.find({"teamMembers": [req.student._id]})
         if(!teams) return res.status(200).send({msg : 'You are not a member of any teams'})
         return res.status(200).send(teams)
     },
 
     getMyProjects: async (req, res) => {
-        const teams = await Team.find({"team.teamMembers": req.student._id})
+        const teams = await Team.find({"teamMembers": [req.student._id]})
         if(!teams) return res.status(200).send({msg : 'You are not a member of any teams'})
         if(teams.length > 1) return
 
-        const projects = await Project.find({"project.team": teams._id, "project.projectMembers": req.student._id})
+        const projects = await Project.find({"team": teams._id, "projectMembers": [req.student._id]})
         if(!projects) return res.status(200).send('You are not a member of any projects on your team')
         return res.status(200).send(projects)
     },
 
     getOpenProjects: async (req, res) => {
-        const projects = await Project.find({"project.projectMembers" : { $nin : [req.student._id]}})
-        if(projects) return res.status(200).send('No projects could be found')
-        return res.status(200).send(projects)
+        const projects = await Project.find()
+        if(!projects) return res.status(500).send('No projects could be found')
+
+        let new_projects = []
+
+        projects.forEach(project => {
+            if(!project.projectMembers.includes(req.student._id)) return new_projects.push(project)
+        })
+
+        return res.status(200).send(new_projects)
     },
 
     getStudent: async (req, res) => {
