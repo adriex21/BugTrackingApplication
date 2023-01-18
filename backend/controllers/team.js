@@ -6,6 +6,7 @@ const Student = require('../models/student');
 
 const controller = {
     addTeam: async (req, res) => {
+        console.log(req.body)
         const { teamName } = req.body;
         let errors = [];
 
@@ -14,12 +15,12 @@ const controller = {
         }
 
         if (errors.length > 0) {
-            return res.send(errors);
+            return res.status(500).send(errors);
         } else {
             await Team.findOne({ teamName: teamName }).then(async team => {
                 if (team) {   
                     errors.push({ msg: 'Name already used' });
-                    return res.send({ msg: 'Team already exists' });
+                    return res.status(500).send({ msg: 'Team already exists' });
                 } else {
                     const student = await Student.findOne({_id: req.student._id})
                     if(!student) return res.status(500).send({ msg: 'Student does not exist' });

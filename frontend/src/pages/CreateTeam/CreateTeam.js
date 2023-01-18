@@ -27,15 +27,15 @@ const CreateTeam = (props) => {
                     <h1 className="">Create a new team by adding a name to be form below</h1>
 
                     {errors.map(error => (
-                        <span className="text-red-500">{error}</span>
+                        <span key={error} className="text-red-500">{error}</span>
                     ))}
 
                     <input
                     value={team.teamName || ''}
                     onChange={(e) => {setTeam({teamName: e.target.value})}}
-                    type="text" className="outline-none h-8 rounded-md"/>
+                    type="text" className="outline-none h-8 rounded-md text-black"/>
 
-                    <button className="bg-[#171723] w-full text-white h-8 rounded-md text-sm font-bold">
+                    <button onClick={handleCreateTeam} className="bg-[#171723] w-full text-white h-8 rounded-md text-sm font-bold">
                         Create new team
                     </button>
 
