@@ -11,8 +11,12 @@ const Teams = ({ teams }) => {
                     <span key={team.teamName}>{team.teamName}</span>
                     ))
                 :
-                <div className='p-5 bg-blue-800 text-white flex justify-between'>
+                <div className='px-10 py-5 bg-blue-800 text-white flex justify-between'>
                     <span className='font-bold'>You have no team</span>
+
+                    <a href='/create-team'>
+                        
+                    </a>
                 </div>
             }
             
