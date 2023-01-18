@@ -28,3 +28,18 @@ export const getOpenProjects = async () => {
         console.log(err)
     }
 }
+
+export const createTeam = async (payload) => {
+    try{
+        const response = await axios({
+            method: 'post',
+            url: 'http://localhost:3002/api/team/add',
+            body: payload,
+            headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
+        });
+        console.log(response.data)
+        return response.data
+    }catch(err){
+        console.log(err)
+    }
+}

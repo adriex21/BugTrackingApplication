@@ -1,11 +1,23 @@
 
 import Main from '../../containers/Main/Main'
+import { useState, useEffect } from 'react';
+import { createTeam } from '../../utils/requests'
+
 
 const initialData = {
     teamName: '',
 }
 
 const CreateTeam = (props) => {
+
+    const [team, setTeam] = useState(initialData)
+    const [errors, setErrors] = useState([])
+
+    const handleCreateTeam = async () => {
+        const response = await createTeam(team)
+        if(response){ return window.location.href = '/' }
+        return setErrors(['Something went wrong'])
+    }
 
     return (
         <Main data={props.data}>
@@ -14,7 +26,14 @@ const CreateTeam = (props) => {
                     <h1 className="font-bold text-2xl">Create new team</h1>
                     <h1 className="">Create a new team by adding a name to be form below</h1>
 
-                    <input type="text" className="outline-none h-8 rounded-md"/>
+                    {errors.map(error => (
+                        <span className="text-red-500">{error}</span>
+                    ))}
+
+                    <input
+                    value={team.teamName || ''}
+                    onChange={(e) => {setTeam({teamName: e.target.value})}}
+                    type="text" className="outline-none h-8 rounded-md"/>
 
                     <button className="bg-[#171723] w-full text-white h-8 rounded-md text-sm font-bold">
                         Create new team
