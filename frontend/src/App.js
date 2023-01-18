@@ -5,6 +5,8 @@ import Login from './pages/Login/Login'
 import CreateTeam from './pages/CreateTeam/CreateTeam'
 import TeamProjects from './pages/TeamProjects/TeamProjects'
 import AddProject from './pages/AddProject/AddProject'
+import RegisterTester from './pages/RegisterTester/RegisterTester'
+
 
 import { useState, useEffect } from 'react';
 import {
@@ -55,6 +57,8 @@ function App() {
         <Route path='/create-team' element={<CreateTeam data={data} />}></Route>
         <Route path='/:teamName/projects' element={<TeamProjects data={data} />}></Route>
         <Route path='/:teamName/add-project' element={<AddProject data={data} />}></Route>
+        <Route path='/projects/:id/register-tester' element={<RegisterTester data={data} />}></Route>
+
 
       </Routes>
     </BrowserRouter>
