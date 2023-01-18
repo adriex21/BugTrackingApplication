@@ -30,6 +30,25 @@ export const getOpenProjects = async () => {
     }
 }
 
+
+export const getProjectBugs = async (projectID) => {
+    try{
+        const response = await axios({
+            method: 'POST',
+            url: 'http://localhost:3002/api/bug/getBugsProject',
+            headers: { 
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                'Content-Type': 'application/json' 
+            },
+            data: JSON.stringify({ id: projectID })
+        })
+        if(response.status === 500) return null
+        return response
+    }catch(err){
+        console.log(err.response.data.msg)
+    }
+}
+
 export const getCurrentlyTestingProjects = async () => {
     try{
         const response = await axios({

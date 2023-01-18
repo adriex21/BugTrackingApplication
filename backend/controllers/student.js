@@ -144,9 +144,11 @@ const controller = {
 
 
     getCurrentlyTestingProjects: async (req, res) => {
-        const projects = await Project.find({testers: [req.student._id]})
-        if(!projects) return res.status(500).send('No projects could be found')
-        return res.status(200).send(projects)
+        const projects = await Project.find()
+        const new_projects = []
+        projects.forEach(project => project.testers.includes(req.student._id) && new_projects.push(project))
+        if(!new_projects) return res.status(500).send('No projects could be found')
+        return res.status(200).send(new_projects)
     },
 
     getStudent: async (req, res) => {

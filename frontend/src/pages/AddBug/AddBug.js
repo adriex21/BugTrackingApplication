@@ -8,8 +8,8 @@ import { useParams } from "react-router-dom";
 const initialData = {
     repository: '',
     description: '',
-    severity: '',
-    priority: '',
+    severity: '1',
+    priority: 'LOW',
 }
 
 const AddBug = (props) => {
@@ -19,6 +19,7 @@ const AddBug = (props) => {
     const params = useParams()
 
     const handleCreateBug = async () => {
+        if(bug.repository === '' || bug.description === '' || bug.severity === '' || bug.priority === '') return setErrors(['Please fill all fields'])
         bug.project_id = params.project_id;
         const response = await createBug(bug)
         if(response){ return window.location.href = `/${params.project_id}/view` }

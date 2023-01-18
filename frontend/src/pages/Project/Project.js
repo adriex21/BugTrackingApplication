@@ -3,11 +3,12 @@ import Main from '../../containers/Main/Main'
 import Bugs from "../../components/Bugs/Bugs";
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { getProjectBugs } from "../../utils/requests";
 
 const Project = (props) => {
 
     const [project, setProject] = useState(null)
-    const [bugs, setBugs] = useState(null)
+    const [bugs, setBugs] = useState([])
     const params = useParams()
 
     useEffect(() => {
@@ -20,11 +21,22 @@ const Project = (props) => {
                 data: {id : params.project_id}
             })
             if(response.status === 500) return
-            console.log(response)
             return setProject(response.data)
         }
         getProject()
     }, [])
+
+    
+    useEffect(() => {
+        const getBugs = async () => {
+            const res = await getProjectBugs(params.project_id);
+            if(res) setBugs(res.data)
+        }
+        getBugs()
+
+    }, [])
+
+
 
     if(!project) return
 
@@ -38,9 +50,11 @@ const Project = (props) => {
                         <h1 className="font-bold mt-10 text-2xl">{project && project.projectName}</h1>
                         <h2 className="mb-5">View, add and modify the bugs of {project && project.projectName}</h2>
                     </div>
-                    {!project.projectMembers.includes(props.data.studentData.id) && <div>
-                        <a href={`/${params.project_id}/add-bug`} className="bg-black py-2 px-3 font-bold rounded-md text-white">Add bug</a>
-                    </div>}
+                    {!project.projectMembers.includes(props.data.studentData._id) && 
+                        <div>
+                            <a href={`/${params.project_id}/add-bug`} className="bg-black py-2 px-3 font-bold rounded-md text-white">Add bug</a>
+                        </div>
+                    }
                     
                 </div>
 
@@ -79,7 +93,7 @@ const Project = (props) => {
 
                         <div className=" flex flex-col">
                             <span>Your permissions</span>
-                            <span className="font-bold">{project && project.projectMembers.includes(props.data.studentData.id) ? 'You are a member of this project' : 'You are registered as a tester of this project'}</span>
+                            <span className="font-bold">{project && project.projectMembers.includes(props.data.studentData._id) ? 'You are a member of this project' : 'You are registered as a tester of this project'}</span>
                         </div>
                     </div>
 
@@ -89,10 +103,7 @@ const Project = (props) => {
                 <h1 className="font-bold mt-10 text-2xl">Project bugs</h1>
                 <h2 className="mb-5">Browse the added bugs of {project && project.projectName}</h2>
 
-                <Bugs>
-
-                </Bugs>
-            
+                <Bugs bugs={bugs} user={props.data} project={project}/>            
             </div>
         </Main>
     )

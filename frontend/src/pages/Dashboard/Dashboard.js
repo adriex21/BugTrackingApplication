@@ -35,6 +35,7 @@ const Dashboard = (props) => {
     useEffect(() => {
         const getCurrentlyTesting = async () => {
             const res = await getCurrentlyTestingProjects();
+            console.log(res)
             if(res) setCurrentlyTestingData(res)
         }
         getCurrentlyTesting()

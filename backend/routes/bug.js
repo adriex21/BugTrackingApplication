@@ -5,9 +5,10 @@ const passport = require('passport');
 const auth = require('../middlewares/auth')
 
 router.post('/add', auth(), bug.addBug);
-router.get('/getBug', bug.getBug);
+router.post('/getBug', auth(),  bug.getBug);
 router.get('/getBugUser', bug.getBugUser);
-router.get('/getBugProject', bug.getBugProject);
+router.get('/getBugProject', auth(), bug.getBugProject);
+router.post('/getBugsProject', auth(), bug.getBugsProject);
 router.put('/updateBug', bug.updateBug);
 router.delete('/delete', bug.deleteBug);
 

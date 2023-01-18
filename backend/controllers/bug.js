@@ -46,25 +46,10 @@ const controller = {
     },
 
     getBug: async (req, res) => {
-        Project.findOne({
-            where: { projectName: req.body.projectName }
-        }).then((project) => {
-            User.findOne({
-                where: { name: req.body.name }
-            }).then(user => {
-                Bug.findAll({
-                    where: { projectID: project.id, userID: user.id }
-                }).then(bug => {
-                    res.status(500).send(bug);
-                }).catch(err => {
-                    res.status(500).send({ msg: 'Nu exista bug-ul' });
-                })
-            }).catch(err => {
-                res.status(500).send({ msg: 'Nu exista user-ul' })
-            })
-        }).catch(err => {
-            res.status(500).send({ msg: 'Nu exista proiectul' })
-        })
+        if(!req.body.id) return res.status(500).send('No bug ID provided')
+        const bug = await Bug.findOne({ _id: req.body.id})
+        if(!bug) return res.status(500).send('No bug found')
+        return res.status(200).send(bug)
     },
 
     getBugUser: async (req, res) => {
@@ -100,13 +85,10 @@ const controller = {
     },
 
     getBugsProject: async (req, res) => {
-        await Bug.findAll({
-
-        }).then(bug=>{
-            res.status(200).send(bug);
-        }).catch(err => {
-            res.status(500).send({ msg: 'Nu exista bug-uri' })
-        })
+        if(!req?.body?.id) return res.status(500).send('No project ID provided')
+        const bugs = await Bug.find({ projectID: req?.body?.id })
+        if(!bugs) return res.status(500).send('No bugs found')
+        return res.status(200).send(bugs)
     },
 
     updateBug: async (req, res) => {

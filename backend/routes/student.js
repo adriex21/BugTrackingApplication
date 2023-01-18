@@ -11,7 +11,7 @@ router.put('/update/:name', student.updateStudent);
 router.delete('/delete/:name', student.deleteStudent);
 router.get('/getMyTeams', auth(), student.getMyTeams)
 router.get('/getOpenProjects', auth(), student.getOpenProjects)
-router.post('/getCurrentlyTestingProjects', auth(), student.getCurrentlyTestingProjects)
+router.get('/getCurrentlyTestingProjects', auth(), student.getCurrentlyTestingProjects)
 
 
 module.exports = router;
