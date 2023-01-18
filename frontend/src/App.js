@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Dashboard from './pages/Dashboard/Dashboard'
 import Login from './pages/Login/Login'
+import CreateTeam from './pages/CreateTeam/CreateTeam'
 import { useState, useEffect } from 'react';
 import {
   BrowserRouter,
@@ -48,6 +49,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Dashboard data={data}></Dashboard>}></Route>
         <Route path='/login' element={<Login data={data} />}></Route>
+        <Route path='/create-team' element={<CreateTeam data={data} />}></Route>
       </Routes>
     </BrowserRouter>
 

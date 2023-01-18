@@ -36,6 +36,11 @@ const controller = {
         }
     },
 
+    addMember: async(req,res) => {
+        const {teamMembers} = req.body;
+        let erros = [];
+    },
+
 
     getTeam: async (req, res) => {
         Team.findOne(
@@ -87,6 +92,7 @@ const controller = {
         try {
             const team = await Team.findOne({ _id: req.body.id });
             if (team) {
+
                 await team.deleteOne();
                 res.status(200).send({ msg: "Team has been deleted" });
             }
