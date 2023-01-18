@@ -8,5 +8,6 @@ router.post('/add', auth(), team.addTeam);
 router.get('/getTeam', auth(), team.getTeam);
 router.put('/update',auth(), team.updateTeam);
 router.delete('/deleteTeam',auth(), team.deleteTeam);
+router.post('/getTeamProjects',auth(), team.getProjects);
 
 module.exports = router;

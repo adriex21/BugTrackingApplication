@@ -46,3 +46,21 @@ export const createTeam = async (payload) => {
         console.log(err)
     }
 }
+
+export const getTeamProjects = async (teamID) => {
+    try{
+        const response = await axios({
+            method: 'POST',
+            url: 'http://localhost:3002/api/team/getTeamProjects',
+            headers: { 
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                'Content-Type': 'application/json' 
+            },
+            data: JSON.stringify({ id: teamID })
+        });
+        if(response.status === 500) return null
+        return response
+    }catch(err){
+        console.log(err.response.data.msg)
+    }
+}

@@ -3,6 +3,7 @@ import './App.css';
 import Dashboard from './pages/Dashboard/Dashboard'
 import Login from './pages/Login/Login'
 import CreateTeam from './pages/CreateTeam/CreateTeam'
+import TeamProjects from './pages/TeamProjects/TeamProjects'
 import { useState, useEffect } from 'react';
 import {
   BrowserRouter,
@@ -50,6 +51,8 @@ function App() {
         <Route path='/' element={<Dashboard data={data}></Dashboard>}></Route>
         <Route path='/login' element={<Login data={data} />}></Route>
         <Route path='/create-team' element={<CreateTeam data={data} />}></Route>
+        <Route path='/:id/projects' element={<TeamProjects data={data} />}></Route>
+
       </Routes>
     </BrowserRouter>
 

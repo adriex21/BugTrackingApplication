@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Team = require('../models/team');
 const Student = require('../models/student');
+const Project = require('../models/project')
 
 const controller = {
     addTeam: async (req, res) => {
@@ -39,8 +40,28 @@ const controller = {
 
     addMember: async(req,res) => {
         const {teamMembers} = req.body;
-        let erros = [];
+        let errors = [];
     },
+
+    getProjects: async (req, res) => {
+        
+        if(!req.body.id) return res.status(500).send({msg: 'Team id is missing'})
+
+        try{
+            const team = await Team.findOne({_id: req?.body?.id})
+            if(!team) return res.status(500).send({msg: 'Team could not be found'})
+            if(!team.teamMembers.includes(req.student._id)) return res.status(500).send({msg: 'You are not part of this team'})
+
+            const projects = await Project.find({ team: req.body.id })
+            if(!projects) return res.status(500).send({msg: 'Could not query projects'})
+            return res.status(200).send({projects: projects})
+
+        }catch(err){
+            console.log(err)
+        }
+    },
+
+
 
 
     getTeam: async (req, res) => {
