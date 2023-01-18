@@ -98,6 +98,43 @@ export const createBug = async (payload) => {
     }
 }
 
+
+export const assignToMe= async (bug_id) => {
+    try{
+        const response = await fetch({
+            method: 'post',
+            url: 'http://localhost:3002/api/bug/assignToMe',
+            headers: { 
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({bug_id : bug_id})
+        })
+        if(response.status === 500) return null
+        return response
+    }catch(err){
+        console.log(err.response.data.msg)
+    }
+}
+
+export const addCommit = async(payload) => {
+    try{
+        const response = await axios('http://localhost:3002/api/bug/addCommit', {
+            method: 'post',
+            headers: {
+                "Authorization" : "Bearer " + localStorage.getItem("token"),
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(payload)
+        })
+        if(response === 500) return null
+        return response
+     
+    } catch(err){
+        console.log(err)
+    }
+}
+
 export const getTeamProjects = async (teamName) => {
     try{
         const response = await axios({

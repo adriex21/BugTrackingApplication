@@ -9,6 +9,8 @@ router.post('/getBug', auth(),  bug.getBug);
 router.get('/getBugUser', bug.getBugUser);
 router.get('/getBugProject', auth(), bug.getBugProject);
 router.post('/getBugsProject', auth(), bug.getBugsProject);
+router.post('/assignToMe', auth(), bug.assignToMe);
+router.post('/addCommit', auth(), bug.addCommit)
 router.put('/updateBug', bug.updateBug);
 router.delete('/delete', bug.deleteBug);
 

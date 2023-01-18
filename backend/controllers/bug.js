@@ -23,23 +23,43 @@ const controller = {
     },
 
     addCommit: async (req, res) => {
+       
+        if(!['Open', 'In-Progress', 'Fixed'].includes(req.body.status)) return res.status(500).send('Status is not recognised')
 
-        if(!['Open', 'Closed'].includes(req.body.status)) return res.status(500).send('Status is not recognised')
-
+        if(!req.body.bug_id) return res.status(500).send('No commit link provided')
         if(!req.body.commit) return res.status(500).send('No commit link provided')
-
-        const project = await Project.findOne({ _id: req.body.project_id })
-        if(!project) return res.status(500).send('Cannot find project')
-        if(!project.projectMembers.includes(req.student._id)) return res.status(500).send('You are not a member of the project')
-        if(!project.bugs.includes(req.body.bug_id)) return res.status(500).send('Bug ID does not belong to this project')
 
         const bug = await Bug.findOne({ _id: req.body.bug_id})
         if(!bug) return res.status(500).send('Could not find bug') 
 
+        const project = await Project.findOne({ _id: bug.projectID })
+        if(!project) return res.status(500).send('Cannot find project')
+        if(!project.projectMembers.includes(req.student._id)) return res.status(500).send('You are not a member of the project')
+        if(!project.bugs.includes(req.body.bug_id)) return res.status(500).send('Bug ID does not belong to this project')
+
+        bug.status = req?.body?.status
         bug.commits.push({
             status: req?.body?.status,
             commit: req?.body?.commit
         })
+
+        await bug.save()
+        return res.status(200).send('Status has been modified') 
+    },
+
+    assignToMe: async (req, res) => {
+       
+        if(!req.body.bug_id) return res.status(500).send('No bug ID provided')
+
+        const bug = await Bug.findOne({ _id: req.body.bug_id})
+        if(!bug) return res.status(500).send('Could not find bug') 
+
+        const project = await Project.findOne({ _id: bug.projectID })
+        if(!project) return res.status(500).send('Cannot find project')
+        if(!project.projectMembers.includes(req.student._id)) return res.status(500).send('You are not a member of the project')
+        if(!project.bugs.includes(req.body.bug_id)) return res.status(500).send('Bug ID does not belong to this project')
+
+        bug.assignedTo = req.student.email
 
         await bug.save()
         return res.status(200).send('Status has been modified') 

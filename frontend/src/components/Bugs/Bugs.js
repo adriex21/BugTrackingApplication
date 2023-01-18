@@ -18,10 +18,14 @@ const Bugs = ({bugs, user, project}) => {
 
                              <div className="flex flex-row gap-5 h-auto">
 
-                                    {bug.status === 'Open' ?
-                                        <span className="bg-green-500 text-sm flex items-center font-bold px-3 rounded-md">{bug.status}</span>
-                                        :
+                                    {bug.status === 'Open' &&
+                                        <span className="bg-green-500 text-sm flex items-center font-bold px-3 rounded-md">{bug.status}</span> 
+                                        ||
+                                    bug.status === 'Fixed' &&
                                         <span className="bg-red-500 text-sm flex items-center font-bold px-3 rounded-md">{bug.status}</span>
+                                        ||
+                                    bug.status === 'In-Progress' &&
+                                        <span className="bg-yellow-500 text-sm flex items-center font-bold px-3 rounded-md">{bug.status}</span>
                                     }
                                     <div className="bg-white text-sm flex items-center font-bold px-3 rounded-full text-black">{bug.severity}</div>
                                     <div className="bg-white text-sm flex items-center font-bold px-3 rounded-full text-black">{bug.priority}</div>
