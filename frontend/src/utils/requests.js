@@ -62,6 +62,23 @@ export const createTeam = async (payload) => {
     }
 }
 
+export const createBug = async (payload) => {
+    try{
+        const response = await fetch('http://localhost:3002/api/bug/add', {
+            method: 'POST',
+            headers: { 
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(payload)
+        })
+        if(response.status === 500) return null
+        return response
+    }catch(err){
+        console.log(err)
+    }
+}
+
 export const getTeamProjects = async (teamName) => {
     try{
         const response = await axios({

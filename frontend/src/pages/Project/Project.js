@@ -1,11 +1,13 @@
 import { useParams } from "react-router-dom";
 import Main from '../../containers/Main/Main'
+import Bugs from "../../components/Bugs/Bugs";
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const Project = (props) => {
 
     const [project, setProject] = useState(null)
+    const [bugs, setBugs] = useState(null)
     const params = useParams()
 
     useEffect(() => {
@@ -37,7 +39,7 @@ const Project = (props) => {
                         <h2 className="mb-5">View, add and modify the bugs of {project && project.projectName}</h2>
                     </div>
                     {!project.projectMembers.includes(props.data.studentData.id) && <div>
-                        <a className="bg-black py-2 px-3 font-bold rounded-md text-white">Add bug</a>
+                        <a href={`/${params.project_id}/add-bug`} className="bg-black py-2 px-3 font-bold rounded-md text-white">Add bug</a>
                     </div>}
                     
                 </div>
@@ -86,6 +88,10 @@ const Project = (props) => {
 
                 <h1 className="font-bold mt-10 text-2xl">Project bugs</h1>
                 <h2 className="mb-5">Browse the added bugs of {project && project.projectName}</h2>
+
+                <Bugs>
+
+                </Bugs>
             
             </div>
         </Main>

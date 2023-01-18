@@ -6,6 +6,8 @@ import CreateTeam from './pages/CreateTeam/CreateTeam'
 import TeamProjects from './pages/TeamProjects/TeamProjects'
 import AddProject from './pages/AddProject/AddProject'
 import Project from './pages/Project/Project';
+import AddBug from './pages/AddBug/AddBug';
+
 import RegisterTester from './pages/RegisterTester/RegisterTester'
 
 
@@ -59,6 +61,8 @@ function App() {
         <Route path='/:teamName/projects' element={<TeamProjects data={data} />}></Route>
         <Route path='/:teamName/add-project' element={<AddProject data={data} />}></Route>
         <Route path='/:project_id/view' element={<Project data={data} />}></Route>
+        <Route path='/:project_id/add-bug' element={<AddBug data={data} />}></Route>
+
       </Routes>
     </BrowserRouter>
 
