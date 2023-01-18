@@ -54,7 +54,7 @@ const controller = {
 
             const projects = await Project.find({ team: team._id })
             if(!projects) return res.status(500).send({msg: 'Could not query projects'})
-            return res.status(200).send({projects: projects})
+            return res.status(200).send(projects)
 
         }catch(err){
             console.log(err)

@@ -24,10 +24,10 @@ const controller = {
             Project.findOne({ projectName: projectName }).then(async project => {
                 if (project) {
                     errors.push({ msg: 'Name already used' });
-                    res.send({ msg: 'Project already exists' });
+                    return res.status(500).send({ msg: 'Project already exists' });
                 } else {
 
-                    const team = await Team.findOne({ _id: req.body.team })
+                    const team = await Team.findOne({ teamName: req.body.team })
 
                     if(!team?.teamMembers.includes(req.student._id)) return res.status(500).send({ msg: "Student is not part of the team" })  
                     if(!team){ return res.status(500).send({ msg: "Team doesn't exist" }) }
@@ -35,9 +35,11 @@ const controller = {
                     const project = await Project.create({ projectName: projectName, repository: repository, team: req.body.team, projectMembers:[req.student._id]})
                     if(!project) return res.status(500).send({ msg: "It didn't work" });
 
-                    team.projects.push(project._id)
+                    team.projects.push(project._id);
+                    project.team = team._id;
                     await team.save()
-                    return res.status(201).send(project);
+                    await project.save()
+                    return res.status(200).send(project);
                 }
             })
         }

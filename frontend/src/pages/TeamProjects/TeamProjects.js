@@ -14,7 +14,7 @@ const TeamProjects = (props) => {
           if(!params) return
           const response = await getTeamProjects(params.teamName)
           if(response){
-            setProjects(response.data.projects)
+            setProjects(response.data)
           }
         }
         getProjects()
@@ -31,11 +31,32 @@ const TeamProjects = (props) => {
             </div>
 
             {projects && projects.length > 0 ?
-                projects.map(project => (
-                    <ul>
-                        <li>{project}</li>
-                    </ul>
-                ))
+                <ul className="px-10 flex flex-col gap-4 mt-10">
+                    {projects.map(project => (       
+                            <li key={project.projectName}>
+                                <div className="bg-black h-16 text-white rounded-md flex justify-between items-center px-4">
+                                    <div className="flex flex-col">
+                                        <span className="font-bold text-xs">Project name</span> 
+                                        {project.projectName} 
+                                    </div>
+
+                                    <div className="flex gap-5">
+                                        <div className="flex flex-col">
+                                            <span className="font-bold text-xs">Members</span> 
+                                            {project.projectMembers.length} 
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="font-bold text-xs">Bugs</span> 
+                                            {project.bugs.length} 
+                                        </div>
+                                        <a href={`/${team.teamName}/projects`} className='text-black bg-white rounded-md py-2 px-3 font-bold'>
+                                            View projects
+                                        </a>
+                                    </div>
+                                </div>      
+                            </li>
+                    ))}
+                </ul>
                 :
                 <div className="px-10 mt-10 flex gap-3 items-center">
                     No projects added for this team

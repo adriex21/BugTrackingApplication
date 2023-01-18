@@ -57,7 +57,7 @@ export const getTeamProjects = async (teamName) => {
                 'Content-Type': 'application/json' 
             },
             data: JSON.stringify({ teamName: teamName })
-        });
+        })
         if(response.status === 500) return null
         return response
     }catch(err){
