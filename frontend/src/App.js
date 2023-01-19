@@ -10,7 +10,7 @@ import Bug from './pages/Bug/Bug';
 import BugCommit from './pages/Bug/AddCommit'
 import AddBug from './pages/AddBug/AddBug';
 import AddMember from './pages/AddMember/AddMember'
-import SignUp from './pages/SignUp/SignUp'
+import SignUp from './pages/Register/SignUp'
 
 import RegisterTester from './pages/RegisterTester/RegisterTester'
 
