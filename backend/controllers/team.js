@@ -3,7 +3,8 @@ const router = express.Router();
 
 const Team = require('../models/team');
 const Student = require('../models/student');
-const Project = require('../models/project')
+const Project = require('../models/project');
+// const student = require('../models/student');
 
 const controller = {
     addTeam: async (req, res) => {
@@ -39,8 +40,21 @@ const controller = {
     },
 
     addMember: async(req,res) => {
-        const {teamMembers} = req.body;
         let errors = [];
+
+        const team = await Team.findOne({ _id: req.body.team_id})
+        if(!team) return res.status(500).send('Could not find team') 
+        const student = await Student.find({ team: team._id })
+        if(!student.email === req.student.email) return res.status(500).send('Could not find email adress')
+        const teamMembers = await Team.find({ teamMembers: team.teamMembers })
+        if(!team.createdBy===req.student._id)return res.status(500).send('You are not the leader')
+
+        team.teamMembers.push({
+            teamMembers: req?.body?.teamMembers
+        })
+
+        await team.save()
+        return res.status(200).send('Team has been modified') 
     },
 
     getProjects: async (req, res) => {

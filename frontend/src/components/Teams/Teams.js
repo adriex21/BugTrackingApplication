@@ -10,11 +10,11 @@ const Teams = ({ teams }) => {
         <div>
             {teams.length > 0 ?
                 teams.map(team => (
-                    <div key={team} className='px-10 py-5 bg-blue-800 text-white flex justify-between items-center'>
+                    <div key={team} className='px-10 py-5 bg-blue-800 w-1/2 mr-auto ml-auto my-10 rounded-md text-white flex justify-between items-center'>
                         <span className='font-bold'>Current team: {team.teamName}</span>
                         <div className='flex gap-3'>
-                            <a href={`/${team.teamName}/manage`} className='text-black bg-white rounded-md py-2 px-3 font-bold'>
-                                Manage
+                            <a href={`/${team.teamName}/addMembers`} className='text-black bg-white rounded-md py-2 px-3 font-bold'>
+                                Add Members
                             </a>
                             <a href={`/${team.teamName}/projects`} className='text-black bg-white rounded-md py-2 px-3 font-bold'>
                                 View projects

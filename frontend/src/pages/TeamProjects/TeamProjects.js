@@ -23,7 +23,7 @@ const TeamProjects = (props) => {
     return(
         <Main data={props.data}>
 
-            <div className="w-full h-16 bg-blue-900 px-10 flex items-center justify-between">
+            <div className="w-1/2 mr-auto ml-auto my-10 rounded-md w-full h-16 bg-blue-900 px-10 flex items-center justify-between">
                 <span className="text-white font-bold">Projects for team {params.teamName}</span>
                 <a href={`/${params.teamName}/add-project`} className="text-black bg-white rounded-md py-2 px-3 font-bold">
                     Add project

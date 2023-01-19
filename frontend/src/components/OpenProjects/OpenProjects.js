@@ -19,9 +19,9 @@ const OpenProject = ({projects}) => {
 
     if(projects && projects === 'No projects could be found'){ return <span>No projects found</span>}
     return (
-        <div className="px-10 mt-10">
+        <div className="px-10 mt-10 ">
 
-            <h1 className="font-bold text-2xl">Tester open projects</h1>
+            <h1 className="font-bold text-2xl ">Tester open projects</h1>
             <span>Below are projects that you are not a member of but can register to submit bugs for.</span>
   
             <ul className="flex flex-col gap-4 mt-10">

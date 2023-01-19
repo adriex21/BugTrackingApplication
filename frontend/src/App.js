@@ -9,6 +9,7 @@ import Project from './pages/Project/Project';
 import Bug from './pages/Bug/Bug';
 import BugCommit from './pages/Bug/AddCommit'
 import AddBug from './pages/AddBug/AddBug';
+import AddMember from './pages/AddMember/AddMember'
 
 import RegisterTester from './pages/RegisterTester/RegisterTester'
 
@@ -66,6 +67,7 @@ function App() {
         <Route path='/:project_id/add-bug' element={<AddBug data={data} />}></Route>
         <Route path='/:bug_id/view-bug' element={<Bug data={data} />}></Route>
         <Route path='/:project_id/:bug_id/add-commit' element={<BugCommit data={data} />}></Route>
+        <Route path='/:teamName/addMembers' element={<AddMember data={data} />}></Route>
 
 
 
