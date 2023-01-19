@@ -10,6 +10,7 @@ import Bug from './pages/Bug/Bug';
 import BugCommit from './pages/Bug/AddCommit'
 import AddBug from './pages/AddBug/AddBug';
 import AddMember from './pages/AddMember/AddMember'
+import SignUp from './pages/SignUp/SignUp'
 
 import RegisterTester from './pages/RegisterTester/RegisterTester'
 
@@ -68,6 +69,8 @@ function App() {
         <Route path='/:bug_id/view-bug' element={<Bug data={data} />}></Route>
         <Route path='/:project_id/:bug_id/add-commit' element={<BugCommit data={data} />}></Route>
         <Route path='/:teamName/addMembers' element={<AddMember data={data} />}></Route>
+        <Route path='/signup' element={<SignUp data={data}/>}></Route>
+
 
 
 

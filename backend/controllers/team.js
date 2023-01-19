@@ -39,23 +39,26 @@ const controller = {
         }
     },
 
-    addMember: async(req,res) => {
-        let errors = [];
+    // addMember: async(req,res) => {
+    //     console.log(req.body)
 
-        const team = await Team.findOne({ _id: req.body.team_id})
-        if(!team) return res.status(500).send('Could not find team') 
-        const student = await Student.find({ team: team._id })
-        if(!student.email === req.student.email) return res.status(500).send('Could not find email adress')
-        const teamMembers = await Team.find({ teamMembers: team.teamMembers })
-        if(!team.createdBy===req.student._id)return res.status(500).send('You are not the leader')
-
-        team.teamMembers.push({
-            teamMembers: req?.body?.teamMembers
-        })
-
-        await team.save()
-        return res.status(200).send('Team has been modified') 
-    },
+    //     try {
+    //         const { email, teamName } = req.body;
+    //         const student = await Student.findOne({ email });
+    //         if (!student) return res.status(404).json({ message: 'Student not found' });
+    //         if (student.team !== 'none') return res.status(400).json({ message: 'Student already belongs to a team' });
+    //         if(!team?.createdBy===(req.student._id)) return res.status(500).send({ msg: "Student is not the leader of the team" })  
+    //         const team = await Team.findOne({ teamName });
+    //         if (!team) return res.status(404).json({ message: 'Team not found' });
+    //         team.teamMembers.push(student._id);
+    //         student.team = team._id;
+    //         await student.save();
+    //         await team.save();
+    //         return res.status(200).json({ message: 'Member added successfully' });
+    //     } catch (err) {
+    //         return res.status(500).json({ message: 'Error adding member', error: err });
+    //     }
+    // },
 
     getProjects: async (req, res) => {
         

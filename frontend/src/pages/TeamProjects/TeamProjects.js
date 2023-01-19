@@ -52,9 +52,7 @@ const TeamProjects = (props) => {
                                         <a href={`/${project._id}/view`} className='text-white border-2 border-white rounded-md py-2 px-3 font-bold'>
                                             View
                                         </a>
-                                        <a href={`/${project._id}/manage`} className='text-white border-2 border-white rounded-md py-2 px-3 font-bold'>
-                                            Manage
-                                        </a>
+                                        
                                     </div>
                                 </div>      
                             </li>

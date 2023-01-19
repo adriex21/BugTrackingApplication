@@ -48,7 +48,7 @@ const AddProject = (props) => {
                     type="text" className="outline-none h-8 rounded-md text-black px-2"/>
 
                     <button onClick={handleCreateProject} className="bg-[#171723] w-full text-white h-8 rounded-md text-sm font-bold">
-                        Create new team
+                        Create new project
                     </button>
 
                 </div>

@@ -10,4 +10,5 @@ router.put('/update',auth(), team.updateTeam);
 router.delete('/deleteTeam',auth(), team.deleteTeam);
 router.post('/getTeamProjects',auth(), team.getProjects);
 
+
 module.exports = router;

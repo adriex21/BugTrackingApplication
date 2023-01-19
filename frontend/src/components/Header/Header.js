@@ -13,7 +13,7 @@ const Header = (props) => {
     return(
         <div className="bg-[#171723] w-full h-20 flex items-center px-10 justify-between">
 
-            <span className="text-white text-2xl font-bold">Bug tracker</span>
+            <button className="text-white text-2xl font-bold "> <a href='/'>Bug tracker </a> </button>
 
             <div>
                 {props.data.loggedin ? <div className="flex flex-row gap-4 items-center">

@@ -23,7 +23,7 @@ const Teams = ({ teams }) => {
                     </div>
                 ))
                 :
-                <div className='px-10 py-5 bg-blue-800 text-white flex justify-between items-center'>
+                <div className='px-10 py-5 bg-blue-800 w-1/2 mr-auto ml-auto my-10 rounded-md text-white flex justify-between items-center'>
                     <span className='font-bold'>You have no team</span>
                     <a className='text-black bg-white rounded-md py-2 px-3 font-bold' href='/create-team'>
                         Create a team

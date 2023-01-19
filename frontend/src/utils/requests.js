@@ -81,22 +81,22 @@ export const createTeam = async (payload) => {
     }
 }
 
-export const addMembers = async (studentData) => {
-    try{
-        const response = await fetch('http://localhost:3002/api/team/addMembers', {
-            method: 'POST',
-            headers: { 
-                "Authorization": "Bearer " + localStorage.getItem("token"),
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify(studentData)
-        })
-        if(response.status === 500) return null
-        return response
-    }catch(err){
-        console.log(err)
-    }
-}
+// export const addMembers = async (student_id) => {
+//     try{
+//         const response = await fetch('http://localhost:3002/api/team/addMembers', {
+//             method: 'POST',
+//             headers: { 
+//                 "Authorization": "Bearer " + localStorage.getItem("token"),
+//                 'Content-Type': 'application/json' 
+//             },
+//             body: JSON.stringify(student_id)
+//         })
+//         if(response.status === 500) return null
+//         return response
+//     }catch(err){
+//         console.log(err)
+//     }
+// }
 
 export const createBug = async (payload) => {
     try{
@@ -202,5 +202,23 @@ export const joinAsTester = async (projectID) => {
         return response
     }catch(err){
         console.log(err.response.data.msg)
+    }
+}
+
+export const SignUp = async (payload) => {
+    try{
+        const response = await fetch('http://localhost:3002/api/student/register', {
+            method: 'POST',
+            headers: { 
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(payload)
+        })
+        if(response.status === 500) return null
+        return response
+    }catch(err){
+        console.log(err)
+        return []
     }
 }
